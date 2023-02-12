@@ -8,6 +8,8 @@ import multer from "multer";
 import morgan from "morgan";
 import path from "path";
 import { fileURLToPath } from "url";
+import authRoutes from "./routes/auth.js";
+import userRoutes from "./routes/user.js";
 import { register } from "./controllers/auth.js";
 
 // CONFIGURATION
@@ -36,14 +38,18 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-// ROUTES 
+// ROUTES WITH FILES
 app.post("/auth/register", upload.single('picture'), register);
 
-// MONGOOSE SETUP
+//ROUTES
+app.use("/auth", authRoutes);
+app.use("/users", userRoutes);
+
+// SERVER & MONGOOSE SETUP
 const PORT = process.env.PORT || 6001;
 mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 }).then(()=>{
-    app.listen(PORT, () => console.log(`Server Port: ${PORT}👍`));
-}).catch(error => console.log(`${error} did not connect👎`))
+    app.listen(PORT, () => console.log(`🟢 🟢 🟢 Server Port: ${PORT} 🟢 🟢 🟢`));
+}).catch(error => console.log(`❌ ❌ ❌ ${error} ❌ ❌ ❌`));
