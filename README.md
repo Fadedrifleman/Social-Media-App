@@ -1,4 +1,4 @@
-# IG-clone
+#SOCIAL MEDIA APP
 
 express 
 body-parser 
